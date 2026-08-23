@@ -1,5 +1,15 @@
+#root {
+  min-height: 100vh;
+}
+
+html,
 body {
+  width: 99%;
   min-width: 320px;
+  overflow-x: hidden;
+}
+
+body {
   min-height: 100vh;
 
   background-color: var(--color-background);
