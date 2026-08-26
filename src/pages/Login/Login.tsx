@@ -3,16 +3,19 @@ import styles from "./Login.module.css";
 import Input from "@/components/ui/Input/Input";
 import { useState } from "react";
 import { Eye, EyeOff, Lock, MoveRight, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import LangMenu from "@/components/ui/LangMenu/LangMenu";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { t } = useTranslation("login");
 
   const verifyData = () => {
     if (username === "" || password === "") {
-      setErrorMessage("Username or password must not be empty");
+      setErrorMessage(t("errors.required"));
       return;
     }
 
@@ -22,8 +25,9 @@ export default function Login() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Abarrotes Cristo</h1>
-        <h2 className={styles.subtitle}>Log In to continue</h2>
+        <LangMenu />
+        <h1 className={styles.title}>{t("title")}</h1>
+        <h2 className={styles.subtitle}>{t("subtitle")}</h2>
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -31,30 +35,39 @@ export default function Login() {
           }}
         >
           <label className={styles.label} htmlFor="username">
-            Username
+            {t("fields.username.label")}
           </label>
           <Input
             id="username"
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
+            placeholder={t("fields.username.placeholder")}
             value={username}
             icon={<User />}
           />
 
           <label className={styles.label} htmlFor="password">
-            Password
+            {t("fields.password.label")}
           </label>
           <Input
             id="password"
             type={showPassword ? "text" : "password"}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
+            placeholder={t("fields.password.placeholder")}
             value={password}
             icon={<Lock />}
             rightElement={
               <button
                 type="button"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={
+                  showPassword
+                    ? t("actions.hidePassword")
+                    : t("actions.showPassword")
+                }
+                title={
+                  showPassword
+                    ? t("actions.hidePassword")
+                    : t("actions.showPassword")
+                }
                 onClick={() => setShowPassword((previous) => !previous)}
               >
                 {showPassword ? <EyeOff /> : <Eye />}
@@ -65,7 +78,7 @@ export default function Login() {
 
           <div className={styles.buttonContainer}>
             <Button className={styles.button} type="submit">
-              LogIn <MoveRight className={styles.buttonIcon} />
+              {t("actions.login")} <MoveRight className={styles.buttonIcon} />
             </Button>
           </div>
         </form>

@@ -1,0 +1,29 @@
+{
+  "actions": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "search": "Buscar",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "back": "Volver"
+  },
+
+  "status": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "pending": "Pendiente"
+  },
+
+  "navigation": {
+    "home": "Inicio",
+    "sales": "Ventas",
+    "products": "Productos",
+    "inventory": "Inventario",
+    "users": "Usuarios",
+    "earnings": "Ganancias",
+    "settings": "Configuración"
+  }
+}

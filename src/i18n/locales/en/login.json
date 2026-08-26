@@ -1,0 +1,25 @@
+{
+  "title": "Abarrotes Cristo",
+  "subtitle": "Log in to continue",
+
+  "fields": {
+    "username": {
+      "label": "Username",
+      "placeholder": "Username"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Password"
+    }
+  },
+
+  "actions": {
+    "login": "Log in",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+
+  "errors": {
+    "required": "Username and password must not be empty"
+  }
+}
