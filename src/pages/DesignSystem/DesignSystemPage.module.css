@@ -1,0 +1,45 @@
+.page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-5);
+}
+
+.description {
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+}
+
+.section {
+  margin-top: var(--space-7);
+}
+
+.content {
+  display: flex;
+  margin-top: var(--space-7);
+}
+
+.inputContainer {
+  width: 100%;
+  max-width: 400px;
+  margin-top: var(--space-4);
+}
+
+.cardContainer {
+  width: 100%;
+  max-width: 400px;
+  margin-top: var(--space-4);
+}
+
+.cardValue {
+  margin-top: var(--space-2);
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
