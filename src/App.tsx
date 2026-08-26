@@ -1,9 +1,9 @@
-import DesignSystemPage from "@/pages/DesignSystem/DesignSystemPage";
+import Login from "@/pages/Login/Login";
 
 function App() {
   return (
     <>
-      <DesignSystemPage />
+      <Login></Login>
     </>
   );
 }
