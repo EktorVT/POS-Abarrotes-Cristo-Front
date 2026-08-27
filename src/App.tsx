@@ -1,9 +1,12 @@
 import Login from "@/pages/Login/Login";
+import AuthProvider from "./context/AuthContext";
 
 function App() {
   return (
     <>
-      <Login></Login>
+      <AuthProvider>
+        <Login></Login>
+      </AuthProvider>
     </>
   );
 }

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Eye, EyeOff, Lock, MoveRight, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LangMenu from "@/components/ui/LangMenu/LangMenu";
-import { login } from "@/services/auth/auth.service";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
@@ -13,6 +13,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { t } = useTranslation("login");
+  const { login } = useAuth();
 
   const verifyData = async () => {
     if (username === "" || password === "") {
@@ -21,11 +22,11 @@ export default function Login() {
     }
 
     setErrorMessage("");
-
-    console.log("URL Base cargada:", import.meta.env.VITE_POS_BASE_URL);
-
-    const loginResponse = await login({ username, password });
-    console.log(loginResponse);
+    try {
+      await login(username, password);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
