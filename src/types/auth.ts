@@ -1,5 +1,3 @@
-//import { jwtDecode } from "jwt-decode";
-
 export type UserRole = "ADMIN" | "CASHIER";
 
 export interface JwtPayload {
@@ -13,5 +11,3 @@ export interface JwtPayload {
 export interface LoginResponse {
   access_token: string;
 }
-
-//const decoded = jwtDecode<JwtPayload>(access_token);
