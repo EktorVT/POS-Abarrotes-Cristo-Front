@@ -6,7 +6,7 @@ import styles from "./LangMenu.module.css";
 type LanguageCode = "en" | "es";
 
 const languages: { code: LanguageCode; label: string; shortLabel: string }[] = [
-  { code: "es", label: "English", shortLabel: "ES" },
+  { code: "es", label: "English", shortLabel: "EN" },
   { code: "en", label: "Español", shortLabel: "ES" }
 ];
 
