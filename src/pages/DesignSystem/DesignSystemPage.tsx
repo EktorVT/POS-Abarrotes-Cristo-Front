@@ -7,9 +7,11 @@ import Modal from "@/components/ui/Modal/Modal";
 import Spinner from "@/components/ui/Spinner/Spinner";
 import EmptyState from "@/components/ui/EmptyState/EmptyState";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 function DesignSystemPage() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { logout } = useAuth();
 
   return (
     <main className={styles.page}>
@@ -22,7 +24,7 @@ function DesignSystemPage() {
       <section className={styles.section}>
         <h2>Buttons</h2>
         <div className={styles.content}>
-          <Button>Accion Principal</Button>
+          <Button onClick={logout}>Cerrar sesión</Button>
         </div>
       </section>
       <section className={styles.section}>

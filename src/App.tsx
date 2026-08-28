@@ -1,12 +1,9 @@
-import Login from "@/pages/Login/Login";
-import AuthProvider from "./context/AuthContext";
+import AppRouter from "./routes/AppRouter";
 
 function App() {
   return (
     <>
-      <AuthProvider>
-        <Login></Login>
-      </AuthProvider>
+      <AppRouter />
     </>
   );
 }

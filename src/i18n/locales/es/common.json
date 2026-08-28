@@ -8,7 +8,8 @@
     "search": "Buscar",
     "close": "Cerrar",
     "confirm": "Confirmar",
-    "back": "Volver"
+    "back": "Volver",
+    "loading": "Loading"
   },
 
   "status": {

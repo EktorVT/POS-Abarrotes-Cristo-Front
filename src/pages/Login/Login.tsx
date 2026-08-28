@@ -6,6 +6,7 @@ import { Eye, EyeOff, Lock, MoveRight, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LangMenu from "@/components/ui/LangMenu/LangMenu";
 import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
@@ -13,6 +14,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { t } = useTranslation("login");
+  const navigate = useNavigate();
   const { login } = useAuth();
 
   const verifyData = async () => {
@@ -24,6 +26,7 @@ export default function Login() {
     setErrorMessage("");
     try {
       await login(username, password);
+      navigate("/design-system");
     } catch (error) {
       console.error(error);
     }
