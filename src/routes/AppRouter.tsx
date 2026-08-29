@@ -4,6 +4,7 @@ import RoleRoute from "./RoleRoute";
 import DesignSystemPage from "@/pages/DesignSystem/DesignSystemPage";
 import Login from "@/pages/Login/Login";
 import GuestRoute from "./GuestRoute";
+import AppLayout from "@/layouts/AppLayout/AppLayout";
 
 export default function AppRouter() {
   return (
@@ -14,15 +15,16 @@ export default function AppRouter() {
         </Route>
 
         <Route element={<ProtectedRoute />}>
-          <Route
-            path="/"
-            element={<Navigate to="/design-system" replace />}
-          ></Route>
-          <Route path="/design-system" element={<DesignSystemPage />} />
+          <Route element={<AppLayout />}>
+            <Route
+              path="/"
+              element={<Navigate to="/design-system" replace />}
+            ></Route>
+            <Route path="/design-system" element={<DesignSystemPage />} />
+
+            <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}></Route>
+          </Route>
         </Route>
-
-        <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}></Route>
-
         <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>
