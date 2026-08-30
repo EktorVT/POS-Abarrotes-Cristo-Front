@@ -4,9 +4,10 @@
 
 html,
 body {
-  width: 99%;
+  width: 100%;
   min-width: 320px;
   overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 body {
@@ -60,4 +61,7 @@ a {
 .text-small {
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-regular);
+}
+
+@media (min-width: 1024px) {
 }

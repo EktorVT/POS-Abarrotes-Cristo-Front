@@ -5,6 +5,11 @@ import DesignSystemPage from "@/pages/DesignSystem/DesignSystemPage";
 import Login from "@/pages/Login/Login";
 import GuestRoute from "./GuestRoute";
 import AppLayout from "@/layouts/AppLayout/AppLayout";
+import Home from "@/pages/Home/Home";
+import Sale from "@/pages/Sale/Sale";
+import Inventory from "@/pages/Inventory/Inventory";
+import Earnings from "@/pages/Earnings/Earnings";
+import SettingsPage from "@/pages/SettingsPage/SettingsPage";
 
 export default function AppRouter() {
   return (
@@ -16,16 +21,18 @@ export default function AppRouter() {
 
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
-            <Route
-              path="/"
-              element={<Navigate to="/design-system" replace />}
-            ></Route>
+            <Route path="/" element={<Navigate to="/home" replace />}></Route>
             <Route path="/design-system" element={<DesignSystemPage />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/sale" element={<Sale />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/earnings" element={<Earnings />} />
+            <Route path="/settings" element={<SettingsPage />} />
 
+            <Route path="*" element={<Home />} />
             <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}></Route>
           </Route>
         </Route>
-        <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

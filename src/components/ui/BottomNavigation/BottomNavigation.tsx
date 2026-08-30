@@ -25,7 +25,7 @@ export default function BottomNavigation({
     >
       <ul className={styles.ul}>
         <NavLink
-          to="/design-system"
+          to="/home"
           className={({ isActive }) =>
             `${styles.item} ${isActive ? styles.active : ""}`
           }
@@ -33,7 +33,7 @@ export default function BottomNavigation({
           <Home />
         </NavLink>
         <NavLink
-          to=""
+          to="/sale"
           className={({ isActive }) =>
             `${styles.item} ${isActive ? styles.active : ""}`
           }
@@ -41,7 +41,7 @@ export default function BottomNavigation({
           <ShoppingCart />
         </NavLink>
         <NavLink
-          to=""
+          to="/inventory"
           className={({ isActive }) =>
             `${styles.item} ${isActive ? styles.active : ""}`
           }
@@ -49,7 +49,7 @@ export default function BottomNavigation({
           <Package />
         </NavLink>
         <NavLink
-          to=""
+          to="/earnings"
           className={({ isActive }) =>
             `${styles.item} ${isActive ? styles.active : ""}`
           }
@@ -57,7 +57,7 @@ export default function BottomNavigation({
           <BanknoteArrowDown />
         </NavLink>
         <NavLink
-          to=""
+          to="/settings"
           className={({ isActive }) =>
             `${styles.item} ${isActive ? styles.active : ""}`
           }
