@@ -23,14 +23,16 @@ export default function AppRouter() {
           <Route element={<AppLayout />}>
             <Route path="/" element={<Navigate to="/home" replace />}></Route>
             <Route path="/design-system" element={<DesignSystemPage />} />
-            <Route path="/home" element={<Home />} />
             <Route path="/sale" element={<Sale />} />
             <Route path="/inventory" element={<Inventory />} />
-            <Route path="/earnings" element={<Earnings />} />
             <Route path="/settings" element={<SettingsPage />} />
 
-            <Route path="*" element={<Home />} />
-            <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}></Route>
+            <Route path="*" element={<Sale />} />
+
+            <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
+              <Route path="/earnings" element={<Earnings />} />
+              <Route path="/home" element={<Home />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

@@ -9,6 +9,8 @@ import {
   Settings,
   ShoppingCart
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { navigationItems } from "@/config/navigation";
 
 interface BottomNavigationProps extends ComponentProps<"nav"> {}
 
@@ -17,6 +19,12 @@ export default function BottomNavigation({
   ...props
 }: BottomNavigationProps) {
   const { t } = useTranslation("common");
+  const { user } = useAuth();
+
+  const visibleItems = navigationItems.filter(
+    (item) => user && item.roles.includes(user.role)
+  );
+
   return (
     <nav
       aria-label={t("navigation.label")}
@@ -24,46 +32,22 @@ export default function BottomNavigation({
       {...props}
     >
       <ul className={styles.ul}>
-        <NavLink
-          to="/home"
-          className={({ isActive }) =>
-            `${styles.item} ${isActive ? styles.active : ""}`
-          }
-        >
-          <Home />
-        </NavLink>
-        <NavLink
-          to="/sale"
-          className={({ isActive }) =>
-            `${styles.item} ${isActive ? styles.active : ""}`
-          }
-        >
-          <ShoppingCart />
-        </NavLink>
-        <NavLink
-          to="/inventory"
-          className={({ isActive }) =>
-            `${styles.item} ${isActive ? styles.active : ""}`
-          }
-        >
-          <Package />
-        </NavLink>
-        <NavLink
-          to="/earnings"
-          className={({ isActive }) =>
-            `${styles.item} ${isActive ? styles.active : ""}`
-          }
-        >
-          <BanknoteArrowDown />
-        </NavLink>
-        <NavLink
-          to="/settings"
-          className={({ isActive }) =>
-            `${styles.item} ${isActive ? styles.active : ""}`
-          }
-        >
-          <Settings />
-        </NavLink>
+        {visibleItems.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <li key={item.path}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `${styles.item} ${isActive ? styles.active : ""}`
+                }
+              >
+                <Icon />
+              </NavLink>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
