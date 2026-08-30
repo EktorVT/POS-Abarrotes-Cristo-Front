@@ -2,13 +2,6 @@ import { type ComponentProps } from "react";
 import styles from "./BottomNavigation.module.css";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
-import {
-  BanknoteArrowDown,
-  Home,
-  Package,
-  Settings,
-  ShoppingCart
-} from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { navigationItems } from "@/config/navigation";
 
