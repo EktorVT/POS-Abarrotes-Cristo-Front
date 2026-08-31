@@ -14,7 +14,7 @@ interface AuthContextType {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<JwtPayload>;
   logout: () => void;
 }
 
@@ -69,6 +69,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
     setToken(accessToken);
     setUser(decodedUser);
+
+    return decodedUser;
   };
 
   const logout = () => {
