@@ -47,7 +47,7 @@ export default function Sale() {
   };
 
   return (
-    <div>
+    <div className={styles.main}>
       <div>
         <h2>Usuario: {user?.username}</h2>
       </div>
