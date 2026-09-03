@@ -1,14 +1,19 @@
 import Button from "@/components/ui/Button/Button";
 import Input from "@/components/ui/Input/Input";
+import Spinner from "@/components/ui/Spinner/Spinner";
 import { useAuth } from "@/context/AuthContext";
+import { searchProduct } from "@/services/products/products.service";
+import type { Product } from "@/types/products";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
+import styles from "./Sale.module.css";
 
 export default function Sale() {
   const [query, setQuery] = useState<string>("");
-  const [results, setResults] = useState([]);
-  const [selectedProducts, setSelectedProducts] = useState<any>([]);
+  const [results, setResults] = useState<Product[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [total, setTotal] = useState<number>(0);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -20,11 +25,8 @@ export default function Sale() {
     const timeoutId = setTimeout(async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          `/api/products/search?q=${encodeURIComponent(query)}`
-        );
-        const data = await response.json();
-
+        const response = searchProduct(query);
+        const data = await response;
         setResults(data);
       } catch (error) {
         console.error("Error al buscar productos:", error);
@@ -37,6 +39,13 @@ export default function Sale() {
     return () => clearTimeout(timeoutId);
   }, [query]);
 
+  const handleSelectProduct = (product: Product) => {
+    setSelectedProducts((prev) => [...prev, product]);
+    setQuery("");
+    setResults([]);
+    setTotal(total);
+  };
+
   return (
     <div>
       <div>
@@ -45,17 +54,43 @@ export default function Sale() {
       <Input
         placeholder="Buscar Producto"
         icon={<Search />}
-        rightElement={<button>Escanear</button>}
+        rightElement={<button className={styles.rightElement}>Escanear</button>}
         onChange={(e) => {
           setQuery(e.target.value);
-          if (selectedProducts) setSelectedProducts(null);
         }}
       />
+      {loading && <Spinner />}
+      {!loading && results.length > 0 && (
+        <ul className={styles.ul}>
+          {results.map((product) => (
+            <li
+              key={product.id}
+              className={styles.li}
+              onClick={() => handleSelectProduct(product)}
+            >
+              <div>
+                <h3 className={styles.productName}>{product.name}</h3>
+                <p className={styles.barcode}>
+                  Barra: {product.barcode} | Stock: {product.stock}
+                </p>
+              </div>
+              <p className={styles.productPrice}>${product.salePrice}</p>
+            </li>
+          ))}
+        </ul>
+      )}
       <h3>Productos</h3>
       <h3>Carrito</h3>
-      <p>Total</p> <p>$ 52</p>
+      <div>
+        <ul>
+          {selectedProducts.map((product) => (
+            <li key={product.id}>{product.name}</li>
+          ))}
+        </ul>
+      </div>
+      <p>Total</p> <p>$ {total}</p>
       <Button>Cancelar</Button>
-      <Button>Cobrar</Button>
+      <Button onClick={() => setSelectedProducts([])}>Cobrar</Button>
     </div>
   );
 }
