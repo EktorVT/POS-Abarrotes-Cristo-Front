@@ -1,16 +1,19 @@
+.searchContainer {
+  position: relative;
+}
+
 .rightElement {
   margin-right: 1rem;
 }
 
 .ul {
   max-height: 300px;
-  width: 625px;
-  overflow-y: scroll;
-  scrollbar-gutter: initial;
+  overflow-y: auto;
   scrollbar-width: none;
-  position: fixed;
-  z-index: 500;
-  background-color: aqua;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
 }
 .li {
   height: 100px;
