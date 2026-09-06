@@ -1,5 +1,11 @@
 .searchContainer {
   position: relative;
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.title p {
+  color: var(--color-text-muted);
 }
 
 .rightElement {
@@ -35,5 +41,34 @@
 }
 
 .productPrice {
+  color: var(--color-success);
+}
+.card {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+.itemName {
+  font-weight: 500;
+}
+.itemInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.quantity button {
+  color: var(--color-primary);
+  background: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+}
+.quantity button:hover {
+  background-color: var(--color-surface-elevated);
+}
+.itemPrice {
   color: var(--color-success);
 }

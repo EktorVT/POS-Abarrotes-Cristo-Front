@@ -10,8 +10,11 @@ import styles from "./Sale.module.css";
 import {
   type CartItem,
   increaseQuantity,
-  decreaseQuantity
+  decreaseQuantity,
+  getStockStatus
 } from "@/utils/cart .utils";
+import Card from "@/components/ui/Card/Card";
+import Badge from "@/components/ui/Badge/Badge";
 
 export default function Sale() {
   const [query, setQuery] = useState<string>("");
@@ -72,6 +75,7 @@ export default function Sale() {
     setQuery("");
     setResults([]);
   };
+
   const total = cart.reduce(
     (sum, item) => sum + Number(item.product.salePrice) * item.quantity,
     0
@@ -79,8 +83,9 @@ export default function Sale() {
 
   return (
     <div className={styles.main}>
-      <div>
-        <h2>Usuario: {user?.username}</h2>
+      <div className={styles.title}>
+        <h3>Nueva Venta</h3>
+        <p>Usuario: {user?.username}</p>
       </div>
       <div className={styles.searchContainer}>
         <Input
@@ -116,18 +121,35 @@ export default function Sale() {
           </ul>
         )}
       </div>
-      <h3>Productos</h3>
       <h3>Carrito</h3>
       <div>
         <ul>
-          {cart.map((item) => (
-            <li key={item.product.id}>
-              {item.product.name}{" "}
-              <button onClick={() => handleDecrease(item.product.id)}>-</button>
-              <span>{item.quantity}</span>
-              <button onClick={() => handleIncrease(item.product.id)}>+</button>
-            </li>
-          ))}
+          {cart.map((item) => {
+            const stockStatus = getStockStatus(item);
+
+            return (
+              <Card key={item.product.id} className={styles.card}>
+                <h3 className={styles.itemName}>{item.product.name}</h3>
+                <div className={styles.itemInfo}>
+                  <div className={styles.quantity}>
+                    <button onClick={() => handleDecrease(item.product.id)}>
+                      -
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => handleIncrease(item.product.id)}>
+                      +
+                    </button>
+                    {stockStatus && (
+                      <Badge variant="danger">{stockStatus}</Badge>
+                    )}
+                  </div>
+                  <span className={styles.itemPrice}>
+                    ${item.product.salePrice * item.quantity}
+                  </span>
+                </div>
+              </Card>
+            );
+          })}
         </ul>
       </div>
       <p>Total</p> <p>$ {total}</p>

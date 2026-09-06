@@ -41,3 +41,17 @@ export function decreaseQuantity(
     })
     .filter((item) => item.quantity > 0);
 }
+
+export const getStockStatus = (item: CartItem) => {
+  const availableStock = item.product.stock - item.quantity;
+
+  if (availableStock <= 0) {
+    return "No stock";
+  }
+
+  if (availableStock <= 3) {
+    return "Poco stock";
+  }
+
+  return null;
+};
