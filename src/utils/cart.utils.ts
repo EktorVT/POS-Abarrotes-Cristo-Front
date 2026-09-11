@@ -55,3 +55,10 @@ export const getStockStatus = (item: CartItem) => {
 
   return null;
 };
+
+export function removeFromCart(
+  cart: CartItem[],
+  productId: number
+): CartItem[] {
+  return cart.filter((item) => item.product.id !== productId);
+}

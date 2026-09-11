@@ -47,6 +47,10 @@
   margin-top: var(--space-2);
   margin-bottom: var(--space-1);
 }
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+}
 .itemName {
   font-weight: 500;
 }
@@ -71,4 +75,33 @@
 }
 .itemPrice {
   color: var(--color-success);
+}
+
+.deleteButton {
+  background: none;
+}
+.itemDelete {
+  color: var(--color-danger);
+  width: 15px;
+}
+.deleteButton:hover {
+  background-color: var(--color-surface-elevated);
+}
+
+.total {
+  margin-top: 1rem;
+}
+.totalActions {
+  margin-top: 1rem;
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.totalPrice {
+  color: var(--color-success);
+  margin: 10px;
+}
+.totalSign {
+  color: var(--color-text);
 }

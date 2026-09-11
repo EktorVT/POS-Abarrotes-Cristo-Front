@@ -4,17 +4,20 @@ import Spinner from "@/components/ui/Spinner/Spinner";
 import { useAuth } from "@/context/AuthContext";
 import { searchProduct } from "@/services/products/products.service";
 import type { Product } from "@/types/products";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import styles from "./Sale.module.css";
 import {
   type CartItem,
   increaseQuantity,
   decreaseQuantity,
-  getStockStatus
-} from "@/utils/cart .utils";
+  getStockStatus,
+  removeFromCart
+} from "@/utils/cart.utils";
 import Card from "@/components/ui/Card/Card";
 import Badge from "@/components/ui/Badge/Badge";
+import { createSaleData } from "@/utils/sale.utils";
+import { postSale, type PostSaleRequest } from "@/services/sale/sale.service";
 
 export default function Sale() {
   const [query, setQuery] = useState<string>("");
@@ -51,6 +54,18 @@ export default function Sale() {
 
   const handleDecrease = (productId: number) => {
     setCart((prev) => decreaseQuantity(prev, productId));
+  };
+
+  const handleRemove = (productId: number) => {
+    setCart((prev) => removeFromCart(prev, productId));
+  };
+
+  const handleCreateSale = async () => {
+    const saleData: PostSaleRequest = createSaleData(cart);
+
+    await postSale(saleData);
+
+    setCart([]);
   };
 
   const handleSelectProduct = (product: Product) => {
@@ -129,7 +144,17 @@ export default function Sale() {
 
             return (
               <Card key={item.product.id} className={styles.card}>
-                <h3 className={styles.itemName}>{item.product.name}</h3>
+                <div className={styles.itemHeader}>
+                  <h3 className={styles.itemName}>{item.product.name}</h3>
+                  <p>${item.product.salePrice}</p>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => handleRemove(item.product.id)}
+                    aria-label={`Eliminar ${item.product.name}`}
+                  >
+                    <X className={styles.itemDelete} />
+                  </button>{" "}
+                </div>
                 <div className={styles.itemInfo}>
                   <div className={styles.quantity}>
                     <button onClick={() => handleDecrease(item.product.id)}>
@@ -152,9 +177,16 @@ export default function Sale() {
           })}
         </ul>
       </div>
-      <p>Total</p> <p>$ {total}</p>
-      <Button>Cancelar</Button>
-      <Button onClick={() => setCart([])}>Cobrar</Button>
+      <div className={styles.total}>
+        <h3>Total</h3>
+        <p className={styles.totalPrice}>
+          <span className={styles.totalSign}>$</span> {total}
+        </p>
+        <div className={styles.totalActions}>
+          <Button onClick={() => handleCreateSale()}>Cobrar</Button>
+          <Button onClick={() => setCart([])}>Cancelar</Button>{" "}
+        </div>
+      </div>
     </div>
   );
 }
