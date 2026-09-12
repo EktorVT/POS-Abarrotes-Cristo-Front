@@ -6,6 +6,7 @@ import { Eye, EyeOff, Lock, MoveRight, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LangMenu from "@/components/ui/LangMenu/LangMenu";
 import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/context/ToastContext";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
@@ -14,6 +15,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { t } = useTranslation("login");
   const { login } = useAuth();
+  const { showToast } = useToast();
 
   const verifyData = async () => {
     if (username === "" || password === "") {
@@ -25,7 +27,11 @@ export default function Login() {
     try {
       await login(username, password);
     } catch (error) {
-      console.error(error);
+      showToast({
+        type: "error",
+        title: "No se pudo Iniciar sesión",
+        message: "Ocurrió un error al iniciar sesión."
+      });
     }
   };
 
