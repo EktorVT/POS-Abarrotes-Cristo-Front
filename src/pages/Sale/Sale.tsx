@@ -18,6 +18,7 @@ import Card from "@/components/ui/Card/Card";
 import Badge from "@/components/ui/Badge/Badge";
 import { createSaleData } from "@/utils/sale.utils";
 import { postSale, type PostSaleRequest } from "@/services/sale/sale.service";
+import { useToast } from "@/context/ToastContext";
 
 export default function Sale() {
   const [query, setQuery] = useState<string>("");
@@ -25,6 +26,7 @@ export default function Sale() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAuth();
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (!query.trim()) {
@@ -63,9 +65,23 @@ export default function Sale() {
   const handleCreateSale = async () => {
     const saleData: PostSaleRequest = createSaleData(cart);
 
-    await postSale(saleData);
+    try {
+      const response = await postSale(saleData);
 
-    setCart([]);
+      setCart([]);
+
+      showToast({
+        type: "success",
+        title: "Venta creada",
+        message: `Venta #${response.saleId} · $${response.total}`
+      });
+    } catch (error) {
+      showToast({
+        type: "error",
+        title: "No se pudo crear la venta",
+        message: "Ocurrió un error al procesar la venta."
+      });
+    }
   };
 
   const handleSelectProduct = (product: Product) => {
@@ -184,7 +200,18 @@ export default function Sale() {
         </p>
         <div className={styles.totalActions}>
           <Button onClick={() => handleCreateSale()}>Cobrar</Button>
-          <Button onClick={() => setCart([])}>Cancelar</Button>{" "}
+          <Button onClick={() => setCart([])}>Cancelar</Button>
+          <Button
+            onClick={() =>
+              showToast({
+                type: "info",
+                title: "Prueba",
+                message: "El Toast funciona correctamente"
+              })
+            }
+          >
+            Probar Toast
+          </Button>
         </div>
       </div>
     </div>
