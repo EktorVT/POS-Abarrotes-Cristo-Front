@@ -20,6 +20,8 @@
   },
 
   "errors": {
-    "required": "Username and password must not be empty"
+    "required": "Username and password must not be empty",
+    "errorLogin": "Could not log in",
+    "errorLoginMessage": "An error occurred while logging in"
   }
 }

@@ -20,6 +20,8 @@
   },
 
   "errors": {
-    "required": "El usuario y la contraseña son obligatorios"
+    "required": "El usuario y la contraseña son obligatorios",
+    "errorLogin": "No se pudo iniciar sesión",
+    "errorLoginMessage": "Ocurrió un error al iniciar sesión"
   }
 }
