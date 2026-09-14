@@ -19,6 +19,7 @@ import Badge from "@/components/ui/Badge/Badge";
 import { createSaleData } from "@/utils/sale.utils";
 import { postSale, type PostSaleRequest } from "@/services/sale/sale.service";
 import { useToast } from "@/context/ToastContext";
+import { useTranslation } from "react-i18next";
 
 export default function Sale() {
   const [query, setQuery] = useState<string>("");
@@ -27,6 +28,7 @@ export default function Sale() {
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { t } = useTranslation("sale");
 
   useEffect(() => {
     if (!query.trim()) {
@@ -40,7 +42,11 @@ export default function Sale() {
         const data = await searchProduct(query);
         setResults(data);
       } catch (error) {
-        console.error("Error al buscar productos:", error);
+        showToast({
+          type: "error",
+          title: `${t("errors.findError")}`,
+          message: `${t("errors.findErrorMessage")}.`
+        });
         setResults([]);
       } finally {
         setLoading(false);
@@ -72,14 +78,14 @@ export default function Sale() {
 
       showToast({
         type: "success",
-        title: "Venta creada",
-        message: `Venta #${response.saleId} · $${response.total}`
+        title: `${t("errors.saleSuccess")}`,
+        message: `${t("actions.sale")} #${response.saleId} · $${response.total}`
       });
     } catch (error) {
       showToast({
         type: "error",
-        title: "No se pudo crear la venta",
-        message: "Ocurrió un error al procesar la venta."
+        title: `${t("errors.saleError")}`,
+        message: `${t("errors.saleErrorMessage")}.`
       });
     }
   };
@@ -115,16 +121,18 @@ export default function Sale() {
   return (
     <div className={styles.main}>
       <div className={styles.title}>
-        <h3>Nueva Venta</h3>
-        <p>Usuario: {user?.username}</p>
+        <h3>{t("title")}</h3>
+        <p>
+          {t("user")}: {user?.username}
+        </p>
       </div>
       <div className={styles.searchContainer}>
         <Input
           value={query}
-          placeholder="Buscar Producto"
+          placeholder={t("fields.search")}
           icon={<Search />}
           rightElement={
-            <button className={styles.rightElement}>Escanear</button>
+            <button className={styles.rightElement}>{t("scan")}</button>
           }
           onChange={(e) => {
             setQuery(e.target.value);
@@ -143,7 +151,8 @@ export default function Sale() {
                 <div>
                   <h3 className={styles.productName}>{product.name}</h3>
                   <p className={styles.barcode}>
-                    Barra: {product.barcode} | Stock: {product.stock}
+                    {t("bar")}: {product.barcode} | {t("stock")}:{" "}
+                    {product.stock}
                   </p>
                 </div>
                 <p className={styles.productPrice}>${product.salePrice}</p>
@@ -152,7 +161,7 @@ export default function Sale() {
           </ul>
         )}
       </div>
-      <h3>Carrito</h3>
+      <h3>{t("cart.title")}</h3>
       <div>
         <ul>
           {cart.map((item) => {
@@ -166,10 +175,10 @@ export default function Sale() {
                   <button
                     className={styles.deleteButton}
                     onClick={() => handleRemove(item.product.id)}
-                    aria-label={`Eliminar ${item.product.name}`}
+                    aria-label={`${t("cart.delete")} ${item.product.name}`}
                   >
                     <X className={styles.itemDelete} />
-                  </button>{" "}
+                  </button>
                 </div>
                 <div className={styles.itemInfo}>
                   <div className={styles.quantity}>
@@ -199,19 +208,10 @@ export default function Sale() {
           <span className={styles.totalSign}>$</span> {total}
         </p>
         <div className={styles.totalActions}>
-          <Button onClick={() => handleCreateSale()}>Cobrar</Button>
-          <Button onClick={() => setCart([])}>Cancelar</Button>
-          <Button
-            onClick={() =>
-              showToast({
-                type: "info",
-                title: "Prueba",
-                message: "El Toast funciona correctamente"
-              })
-            }
-          >
-            Probar Toast
+          <Button onClick={() => handleCreateSale()}>
+            {t("actions.sale")}
           </Button>
+          <Button onClick={() => setCart([])}>{t("actions.cancel")}</Button>
         </div>
       </div>
     </div>

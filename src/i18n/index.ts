@@ -3,19 +3,23 @@ import { initReactI18next } from "react-i18next";
 
 import esCommon from "@/i18n/locales/es/common.json";
 import esLogin from "@/i18n/locales/es/login.json";
+import esSale from "@/i18n/locales/es/sale.json";
 
 import enCommon from "@/i18n/locales/en/common.json";
 import enLogin from "@/i18n/locales/en/login.json";
+import enSale from "@/i18n/locales/en/sale.json";
 
 i18n.use(initReactI18next).init({
   resources: {
     es: {
       common: esCommon,
-      login: esLogin
+      login: esLogin,
+      sale: esSale
     },
     en: {
       common: enCommon,
-      login: enLogin
+      login: enLogin,
+      sale: enSale
     }
   },
 

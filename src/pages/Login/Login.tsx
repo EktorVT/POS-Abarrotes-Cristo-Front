@@ -29,8 +29,8 @@ export default function Login() {
     } catch (error) {
       showToast({
         type: "error",
-        title: "No se pudo Iniciar sesión",
-        message: "Ocurrió un error al iniciar sesión."
+        title: t("errors.errorLogin"),
+        message: t("errors.errorLoginMessage")
       });
     }
   };
