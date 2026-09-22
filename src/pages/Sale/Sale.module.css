@@ -1,3 +1,8 @@
+.saleContent {
+  display: flex;
+  flex-direction: column;
+}
+
 .searchContainer {
   position: relative;
   margin-top: var(--space-3);
@@ -20,6 +25,7 @@
   top: 100%;
   left: 0;
   width: 100%;
+  z-index: 10;
 }
 .li {
   height: 100px;
@@ -48,8 +54,10 @@
   margin-bottom: var(--space-1);
 }
 .itemHeader {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: var(--space-2);
 }
 .itemName {
   font-weight: 500;
@@ -78,7 +86,13 @@
 }
 
 .deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
   background: none;
+  color: var(--color-danger);
+  border-radius: var(--radius-sm);
 }
 .itemDelete {
   color: var(--color-danger);
@@ -104,4 +118,17 @@
 }
 .totalSign {
   color: var(--color-text);
+}
+
+@media (min-width: 1024px) {
+  .saleContent {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(400px, 0.8fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .cartList {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+  }
 }
