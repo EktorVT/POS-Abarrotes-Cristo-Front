@@ -119,101 +119,106 @@ export default function Sale() {
   );
 
   return (
-    <div className={styles.main}>
-      <div className={styles.title}>
-        <h3>{t("title")}</h3>
-        <p>
-          {t("user")}: {user?.username}
-        </p>
-      </div>
-      <div className={styles.searchContainer}>
-        <Input
-          value={query}
-          placeholder={t("fields.search")}
-          icon={<Search />}
-          rightElement={
-            <button className={styles.rightElement}>{t("scan")}</button>
-          }
-          onChange={(e) => {
-            setQuery(e.target.value);
-          }}
-        />
-        {loading && <Spinner />}
-
-        {!loading && results.length > 0 && (
-          <ul className={styles.ul}>
-            {results.map((product) => (
-              <li
-                key={product.id}
-                className={styles.li}
-                onClick={() => handleSelectProduct(product)}
-              >
-                <div>
-                  <h3 className={styles.productName}>{product.name}</h3>
-                  <p className={styles.barcode}>
-                    {t("bar")}: {product.barcode} | {t("stock")}:{" "}
-                    {product.stock}
-                  </p>
-                </div>
-                <p className={styles.productPrice}>${product.salePrice}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <h3>{t("cart.title")}</h3>
-      <div>
-        <ul>
-          {cart.map((item) => {
-            const stockStatus = getStockStatus(item);
-
-            return (
-              <Card key={item.product.id} className={styles.card}>
-                <div className={styles.itemHeader}>
-                  <h3 className={styles.itemName}>{item.product.name}</h3>
-                  <p>${item.product.salePrice}</p>
-                  <button
-                    className={styles.deleteButton}
-                    onClick={() => handleRemove(item.product.id)}
-                    aria-label={`${t("cart.delete")} ${item.product.name}`}
-                  >
-                    <X className={styles.itemDelete} />
-                  </button>
-                </div>
-                <div className={styles.itemInfo}>
-                  <div className={styles.quantity}>
-                    <button onClick={() => handleDecrease(item.product.id)}>
-                      -
-                    </button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => handleIncrease(item.product.id)}>
-                      +
-                    </button>
-                    {stockStatus && (
-                      <Badge variant="danger">{stockStatus}</Badge>
-                    )}
-                  </div>
-                  <span className={styles.itemPrice}>
-                    ${item.product.salePrice * item.quantity}
-                  </span>
-                </div>
-              </Card>
-            );
-          })}
-        </ul>
-      </div>
-      <div className={styles.total}>
-        <h3>Total</h3>
-        <p className={styles.totalPrice}>
-          <span className={styles.totalSign}>$</span> {total}
-        </p>
-        <div className={styles.totalActions}>
-          <Button onClick={() => handleCreateSale()}>
-            {t("actions.sale")}
-          </Button>
-          <Button onClick={() => setCart([])}>{t("actions.cancel")}</Button>
+    <div className={styles.saleContent}>
+      <section className={styles.products}>
+        <div className={styles.title}>
+          <h3>{t("title")}</h3>
+          <p>
+            {t("user")}: {user?.username}
+          </p>
         </div>
-      </div>
+        <div className={styles.searchContainer}>
+          <Input
+            value={query}
+            placeholder={t("fields.search")}
+            icon={<Search />}
+            rightElement={
+              <button className={styles.rightElement}>{t("scan")}</button>
+            }
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
+          {loading && <Spinner />}
+
+          {!loading && results.length > 0 && (
+            <ul className={styles.ul}>
+              {results.map((product) => (
+                <li
+                  key={product.id}
+                  className={styles.li}
+                  onClick={() => handleSelectProduct(product)}
+                >
+                  <div>
+                    <h3 className={styles.productName}>{product.name}</h3>
+                    <p className={styles.barcode}>
+                      {t("bar")}: {product.barcode} | {t("stock")}:{" "}
+                      {product.stock}
+                    </p>
+                  </div>
+                  <p className={styles.productPrice}>${product.salePrice}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+
+      <section className={styles.cartSection}>
+        <h3>{t("cart.title")}</h3>
+        <div className={styles.cartList}>
+          <ul>
+            {cart.map((item) => {
+              const stockStatus = getStockStatus(item);
+
+              return (
+                <Card key={item.product.id} className={styles.card}>
+                  <div className={styles.itemHeader}>
+                    <h3 className={styles.itemName}>{item.product.name}</h3>
+                    <p>${item.product.salePrice}</p>
+                    <button
+                      className={styles.deleteButton}
+                      onClick={() => handleRemove(item.product.id)}
+                      aria-label={`${t("cart.delete")} ${item.product.name}`}
+                    >
+                      <X className={styles.itemDelete} />
+                    </button>
+                  </div>
+                  <div className={styles.itemInfo}>
+                    <div className={styles.quantity}>
+                      <button onClick={() => handleDecrease(item.product.id)}>
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button onClick={() => handleIncrease(item.product.id)}>
+                        +
+                      </button>
+                      {stockStatus && (
+                        <Badge variant="danger">{stockStatus}</Badge>
+                      )}
+                    </div>
+                    <span className={styles.itemPrice}>
+                      ${item.product.salePrice * item.quantity}
+                    </span>
+                  </div>
+                </Card>
+              );
+            })}
+          </ul>
+        </div>
+        <div className={styles.total}>
+          <h3>Total</h3>
+          <p className={styles.totalPrice}>
+            <span className={styles.totalSign}>$</span> {total}
+          </p>
+          <div className={styles.totalActions}>
+            <Button onClick={() => handleCreateSale()}>
+              {t("actions.sale")}
+            </Button>
+            <Button onClick={() => setCart([])}>{t("actions.cancel")}</Button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
